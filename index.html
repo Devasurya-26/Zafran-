@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ZAFRAN — Premium Men's Fashion</title>
+      <link rel="stylesheet" href="style.css">
+    </head>
+    
+    <body>
+    
+      <div id="cur"></div>
+      <div id="cur2"></div>
+    
+      <!-- LOADER -->
+      <div id="ldr">
+        <div class="ldr-logo">ZAFRAN</div>
+        <div class="ldr-sub">Premium Men's Fashion</div>
+        <div class="ldr-bar">
+          <div class="ldr-fill"></div>
+        </div>
+      </div>
+    
+      <!-- MOBILE NAV -->
+      <div class="mnav" id="mnav">
+        <button class="mnav-close" onclick="closeMnav()">✕</button>
+        <a href="#" onclick="closeMnav()">Home</a>
+        <a href="#categories" onclick="closeMnav()">Collections</a>
+        <a href="#products" onclick="closeMnav()">Shop</a>
+        <a href="#footer" onclick="closeMnav()">Contact</a>
+      </div>
+    
+      <!-- SEARCH OVERLAY -->
+      <div class="srch-ov" id="srchOv">
+        <div class="srch-label">Search</div>
+        <div class="srch-row">
+          <input class="srch-inp" id="srchInp" placeholder="T-Shirts, Jeans, Hoodies..." oninput="doSearch(this.value)" />
+          <button class="srch-x" onclick="closeSrch()">✕</button>
+        </div>
+        <div class="srch-tags">
+          <span class="stag" onclick="setSearch('Oversized')">Oversized Tees</span>
+          <span class="stag" onclick="setSearch('Cargo')">Cargo Pants</span>
+          <span class="stag" onclick="setSearch('Hoodie')">Hoodies</span>
+          <span class="stag" onclick="setSearch('Kurta')">Kurtas</span>
+          <span class="stag" onclick="setSearch('Blazer')">Blazers</span>
+        </div>
+        <div class="srch-results" id="srchResults"></div>
+      </div>
+    
+      <!-- WISHLIST MODAL -->
+      <div class="wl-modal" id="wlModal">
+        <div class="wl-bg" onclick="closeWL()"></div>
+        <div class="wl-box">
+          <div class="wl-head">
+            <h3>My Wishlist <span style="font-size:.8rem;font-weight:400;color:var(--muted)" id="wlCount"></span>
+            </h3>
+            <button class="csbtn" onclick="closeWL()">✕</button>
+          </div>
+          <div class="wl-body" id="wlBody"></div>
+        </div>
+      </div>
+    
+      <!-- CART SIDEBAR -->
+      <div class="cart-bg" id="cartBg" onclick="closeCart()"></div>
+      <div class="csidebar" id="cartSidebar">
+        <div class="cshead">
+          <div>
+            <h3 style="display:inline;">Cart</h3><span class="cscnt" id="cartCnt"></span>
+          </div>
+          <button class="csbtn" onclick="closeCart()">✕</button>
+        </div>
+        <div class="csitems" id="cartItems"></div>
+        <div class="csfooter">
+          <div class="cstotal">
+            <span class="cstl">Subtotal</span>
+            <span class="cstamt" id="cartTotal">₹0</span>
+          </div>
+          <button class="chkbtn" onclick="openCheckout()">Checkout →</button>
+        </div>
+      </div>
+    
+      <!-- CHECKOUT MODAL -->
+      <div class="ck-modal" id="ckModal">
+        <div class="ck-bg" onclick="closeCK()"></div>
+        <div class="ck-box" id="ckBox">
+          <div class="ck-left" id="ckLeft">
+            <h3 class="ck-title">Checkout</h3>
+            <div id="ckAddressStep">
+              <label class="flbl">Full Name</label>
+              <input class="finp" placeholder="Your Name" id="ck_name" />
+              <div class="frow">
+                <div><label class="flbl">Phone</label><input class="finp" placeholder="+91 98765 43210" id="ck_phone" />
+                </div>
+                <div><label class="flbl">Pincode</label><input class="finp" placeholder="600001" id="ck_pin"
+                    maxlength="6" /></div>
+              </div>
+              <label class="flbl">Address Line 1</label>
+              <input class="finp" placeholder="House no, Street name" id="ck_addr" />
+              <div class="frow">
+                <div><label class="flbl">City</label><input class="finp" placeholder="Chennai" id="ck_city" />
+                </div>
+                <div><label class="flbl">State</label>
+                  <select class="finp" id="ck_state">
+                    <option value="">Select State</option>
+                    <option>Tamil Nadu</option>
+                    <option>Karnataka</option>
+                    <option>Kerala</option>
+                    <option>Andhra Pradesh</option>
+                    <option>Telangana</option>
+                    <option>Maharashtra</option>
+                    <option>Delhi</option>
+                    <option>Uttar Pradesh</option>
+                    <option>Rajasthan</option>
+                    <option>Gujarat</option>
+                    <option>West Bengal</option>
+                    <option>Punjab</option>
+                  </select>
+                </div>
+              </div>
+              <label class="flbl">Payment Method</label>
+              <div class="pay-opts">
+                <div class="popt on" onclick="selPay(this,'UPI')">📱 UPI</div>
+                <div class="popt" onclick="selPay(this,'Card')">💳 Card</div>
+                <div class="popt" onclick="selPay(this,'COD')">💵 COD</div>
+                <div class="popt" onclick="selPay(this,'Net Banking')">🏦 Net Banking</div>
+              </div>
+              <button class="ck-submit" onclick="placeOrder()">Place Order →</button>
+            </div>
+          </div>
+          <div class="ck-right">
+            <h3 class="ck-title">Order Summary</h3>
+            <div id="ckOrderItems"></div>
+            <div class="ck-summary">
+              <div class="ck-srow"><span>Subtotal</span><span id="ckSub">₹0</span></div>
+              <div class="ck-srow"><span>Shipping</span><span id="ckShip">FREE</span></div>
+              <div class="ck-srow"><span>Discount</span><span id="ckDisc" style="color:var(--jade)">-₹0</span>
+              </div>
+              <div class="ck-total"><span>Total</span><span id="ckTot">₹0</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+      <!-- TOAST -->
+      <div class="toast" id="toast"><span id="toastMsg"></span></div>
+      <button id="btop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+    
+      <!-- HEADER -->
+      <header id="hdr">
+        <a href="#" class="logo">ZA<em>F</em>RAN</a>
+        <nav>
+          <a href="#categories">Collections</a>
+          <a href="#products">Shop</a>
+          <a href="#footer">About</a>
+        </nav>
+        <div class="h-actions">
+          <button class="hbtn" onclick="openSrch()" title="Search">🔍</button>
+          <button class="hbtn" onclick="openWL()" title="Wishlist">
+            ♡
+            <span class="cbadge" id="wlBadge" style="display:none;background:var(--rose)"></span>
+          </button>
+          <button class="hbtn" onclick="openCart()" title="Cart">
+            🛒
+            <span class="cbadge" id="cartBadge">0</span>
+          </button>
+          <button class="menubtn hbtn" onclick="openMnav()">☰</button>
+        </div>
+      </header>
+    
+      <!-- HERO -->
+      <section class="hero" id="home">
+        <div class="hero-l">
+          <div class="hero-eyebrow">
+            <div class="eyebrow-line"></div>
+            <span>New Collection · 2026</span>
+          </div>
+          <h1>
+            Style That<br>
+            <i>Speaks</i><br>
+            <span class="jade">Volumes.</span>
+          </h1>
+          <p class="hero-desc">From streetwear to ethnic elegance — premium men's fashion for every occasion. Crafted
+            for the modern Indian man.</p>
+          <div class="cta-row">
+            <a href="#products" class="btn-fill">Shop Collection →</a>
+            <a href="#categories" class="btn-ghost">Explore Looks</a>
+          </div>
+          <div class="hero-nums">
+            <div class="num-item"><span class="n">5000+</span><span class="l">Products</span></div>
+            <div class="num-item"><span class="n">50K+</span><span class="l">Customers</span></div>
+            <div class="num-item"><span class="n">4.9★</span><span class="l">Rating</span></div>
+          </div>
+        </div>
+        <div class="hero-r">
+          <div class="hero-r-bg"></div>
+          <div class="hero-r-pattern"></div>
+          <img class="hero-main-img" src="https://images.unsplash.com/photo-1617137984095-74e4e5e3613f?w=700&q=90"
+            alt="Hero Fashion"
+            onerror="this.src='https://images.unsplash.com/photo-1490578474895-699cd4e2cf59?w=700&q=80'" />
+          <div class="hero-pill hp1">
+            <div class="pill-icon">⭐</div>
+            <div class="pill-big">4.9 / 5</div>
+            <div class="pill-sm">2,400+ Reviews</div>
+          </div>
+          <div class="hero-pill hp2">
+            <div class="pill-icon">🚚</div>
+            <div class="pill-big">FREE Shipping</div>
+            <div class="pill-sm">Orders ₹999+</div>
+          </div>
+          <div class="hero-pill hp3">
+            <div class="pill-icon">🔁</div>
+            <div class="pill-big">30-Day Return</div>
+            <div class="pill-sm">No Questions</div>
+          </div>
+        </div>
+      </section>
+    
+      <!-- TICKER -->
+      <div class="ticker">
+        <div class="ticker-inner">
+          <span>Free Shipping ₹999+</span><span>6 Collections</span><span>Casual Wear</span><span>Ethnic
+            Wear</span><span>Winter Collection 2025</span><span>COD Available</span><span>Easy
+            Returns</span><span>Formal & Activewear</span>
+          <span>Free Shipping ₹999+</span><span>6 Collections</span><span>Casual Wear</span><span>Ethnic
+            Wear</span><span>Winter Collection 2025</span><span>COD Available</span><span>Easy
+            Returns</span><span>Formal & Activewear</span>
+        </div>
+      </div>
+    
+      <!-- CATEGORIES -->
+      <section class="sec cat-sec rv" id="categories">
+        <div class="cat-hd">
+          <div>
+            <div class="sec-eye">Shop By</div>
+            <h2 class="sec-title" style="margin-bottom:0">Collections</h2>
+          </div>
+          <a href="#products" class="btn-ghost" style="font-size:.72rem;padding:10px 22px;">View All</a>
+        </div>
+        <div class="cat-main-grid">
+          <div class="cat-card" onclick="openCat('Casual')">
+            <img
+              src="https://static.vecteezy.com/system/resources/thumbnails/037/901/280/small/clothing-for-men-on-the-wooden-floor-photo.jpg"
+              alt="Casual Wear"
+              onerror="this.src='https://images.unsplash.com/photo-1503341504253-dff4815485f1?w=500&q=80'" />
+            <div class="cc-overlay"><button class="cc-go">→</button></div>
+            <div class="cat-label">
+              <div class="cat-name">Casual Wear</div>
+              <div class="cat-num">T-Shirts, Shirts, Co-ords</div>
+            </div>
+          </div>
+          <div class="cat-card" onclick="openCat('Bottom')">
+            <img src="https://annachy-prod-assets.annachy.com/pims/products-v1/CLMT23NAV40_1-thumbnail_v1776315389246.webp"
+              alt="Bottom Wear"
+              onerror="this.src='https://images.unsplash.com/photo-1473966968600-fa801b869a1a?w=500&q=80'" />
+            <div class="cc-overlay"><button class="cc-go">→</button></div>
+            <div class="cat-label">
+              <div class="cat-name">Bottom Wear</div>
+              <div class="cat-num">Jeans, Cargos, Trousers</div>
+            </div>
+          </div>
+          <div class="cat-card" onclick="openCat('Ethnic')">
+            <img
+              src="https://images.pexels.com/photos/29427497/pexels-photo-29427497/free-photo-of-elegant-traditional-men-s-fashion-in-ornate-setting.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
+              alt="Ethnic Wear"
+              onerror="this.src='https://images.unsplash.com/photo-1583391733956-6c78276477e1?w=500&q=80'" />
+            <div class="cc-overlay"><button class="cc-go">→</button></div>
+            <div class="cat-label">
+              <div class="cat-name">Ethnic Wear</div>
+              <div class="cat-num">Kurtas, Sherwanis, Dhotis</div>
+            </div>
+          </div>
+          <div class="cat-card" onclick="openCat('Winter')">
+            <img src="https://img.magnific.com/free-photo/medium-shot-smiley-man-wearing-warm-clothes_23-2149248883.jpg"
+              alt="Winter Wear"
+              onerror="this.src='https://images.unsplash.com/photo-1512327536842-5aa37d1ba3e3?w=500&q=80'" />
+            <div class="cc-overlay"><button class="cc-go">→</button></div>
+            <div class="cat-label">
+              <div class="cat-name">Winter Wear</div>
+              <div class="cat-num">Hoodies, Jackets, Sweaters</div>
+            </div>
+          </div>
+          <div class="cat-card" onclick="openCat('Formal')">
+            <img
+              src="https://images.unsplash.com/photo-1618886614638-80e3c103d31a?fm=jpg&q=60&w=3000&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8Zm9ybWFsJTIwbWVufGVufDB8fDB8fHww"
+              alt="Formal Wear"
+              onerror="this.src='https://images.unsplash.com/photo-1490578474895-699cd4e2cf59?w=500&q=80'" />
+            <div class="cc-overlay"><button class="cc-go">→</button></div>
+            <div class="cat-label">
+              <div class="cat-name">Formal Wear</div>
+              <div class="cat-num">Suits, Blazers, Formals</div>
+            </div>
+          </div>
+          <div class="cat-card" onclick="openCat('Active')">
+            <img
+              src="https://static.vecteezy.com/system/resources/thumbnails/047/418/242/small/muscular-man-running-in-blue-tank-top-and-grey-shorts-png.png"
+              alt="Activewear"
+              onerror="this.src='https://images.unsplash.com/photo-1526506118085-60ce8714f8c5?w=500&q=80'" />
+            <div class="cc-overlay"><button class="cc-go">→</button></div>
+            <div class="cat-label">
+              <div class="cat-name">Activewear</div>
+              <div class="cat-num">Gym, Sports, Training</div>
+            </div>
+          </div>
+        </div>
+        <!-- SUB-CATEGORY PANEL -->
+        <div class="subcat-panel" id="subcatPanel">
+          <div class="subcat-title" id="subcatTitle">Category <span id="subcatCount"></span></div>
+          <div class="subcat-chips" id="subcatChips"></div>
+        </div>
+      </section>
+    
+      <!-- PRODUCTS -->
+      <section class="sec prod-sec rv" id="products">
+        <div class="prod-top">
+          <div>
+            <div class="sec-eye">Best Sellers</div>
+            <h2 class="sec-title" style="margin-bottom:0">Featured Products</h2>
+          </div>
+          <div class="ftabs">
+            <button class="ftab on" onclick="filterP('All',this)">All</button>
+            <button class="ftab" onclick="filterP('Casual',this)">Casual</button>
+            <button class="ftab" onclick="filterP('Bottom',this)">Bottoms</button>
+            <button class="ftab" onclick="filterP('Ethnic',this)">Ethnic</button>
+            <button class="ftab" onclick="filterP('Winter',this)">Winter</button>
+            <button class="ftab" onclick="filterP('Formal',this)">Formal</button>
+            <button class="ftab" onclick="filterP('Active',this)">Active</button>
+            <button class="ftab" onclick="filterP('Sale',this)">Sale</button>
+          </div>
+        </div>
+        <div class="pgrid" id="pgrid"></div>
+      </section>
+    
+      <!-- BANNER -->
+      <div class="big-banner rv">
+        <div class="bb-l">
+          <div class="bb-tag"><span>Limited Time Offer</span></div>
+          <h2 class="bb-title">End of Season<br><em>Sale 2025</em></h2>
+          <p class="bb-desc">Refresh your wardrobe this season. Premium casuals, ethnic essentials & winter staples —
+            all at unbeatable prices.</p>
+          <div class="bb-cards">
+            <div class="bbc">
+              <div class="bbc-pct">40%</div>
+              <div class="bbc-l">Casual<br>Collection</div>
+            </div>
+            <div class="bbc">
+              <div class="bbc-pct">35%</div>
+              <div class="bbc-l">Winter<br>Wear</div>
+            </div>
+            <div class="bbc">
+              <div class="bbc-pct">₹0</div>
+              <div class="bbc-l">Shipping<br>₹999+</div>
+            </div>
+          </div>
+          <button class="btn-fill" style="margin-top:2rem;background:var(--saffron);"
+            onclick="filterP('Sale',null);document.getElementById('products').scrollIntoView({behavior:'smooth'})">Grab
+            Deals →</button>
+        </div>
+        <div class="bb-r">
+          <img src="https://t4.ftcdn.net/jpg/04/79/65/63/360_F_479656354_0d7Ji190Jbsc6C2gg1WQWNlGc4LOYRA4.jpg"
+            alt="Sale banner" />
+        </div>
+      </div>
+    
+      <!-- FEATURES -->
+      <section class="sec feat-sec rv">
+        <div style="text-align:center;margin-bottom:3rem;">
+          <div class="sec-eye">Why Zafran</div>
+          <h2 class="sec-title">Our Promise To You</h2>
+        </div>
+        <div class="feat-grid">
+          <div class="feat-item">
+            <div class="ficon">🚚</div>
+            <div class="ftitle">Free Shipping</div>
+            <div class="fdesc">On all orders above ₹999. Pan India delivery in 3–5 days.</div>
+          </div>
+          <div class="feat-item">
+            <div class="ficon">🔄</div>
+            <div class="ftitle">30-Day Returns</div>
+            <div class="fdesc">Not happy? Return within 30 days for full refund. No questions.</div>
+          </div>
+          <div class="feat-item">
+            <div class="ficon">🧵</div>
+            <div class="ftitle">Premium Quality</div>
+            <div class="fdesc">Curated brands, premium fabrics and expert craftsmanship only.</div>
+          </div>
+          <div class="feat-item">
+            <div class="ficon">📐</div>
+            <div class="ftitle">Perfect Fit Guide</div>
+            <div class="fdesc">Detailed size charts for every category. Get it right the first time.</div>
+          </div>
+          <div class="feat-item">
+            <div class="ficon">💳</div>
+            <div class="ftitle">Secure Payments</div>
+            <div class="fdesc">UPI, cards, net banking & COD. 100% encrypted checkout.</div>
+          </div>
+          <div class="feat-item">
+            <div class="ficon">🎁</div>
+            <div class="ftitle">Gift Wrapping</div>
+            <div class="fdesc">Luxury gift wrapping complimentary on all purchases.</div>
+          </div>
+          <div class="feat-item">
+            <div class="ficon">⭐</div>
+            <div class="ftitle">Loyalty Points</div>
+            <div class="fdesc">Earn on every purchase. Redeem for discounts & free products.</div>
+          </div>
+          <div class="feat-item">
+            <div class="ficon">📞</div>
+            <div class="ftitle">24/7 Support</div>
+            <div class="fdesc">Our team is always ready via chat, call & WhatsApp.</div>
+          </div>
+        </div>
+      </section>
+    
+      <!-- TESTIMONIALS -->
+      <section class="sec rv">
+        <div class="sec-hd" style="text-align:center;margin-bottom:0;">
+          <div class="sec-eye">Reviews</div>
+          <h2 class="sec-title">What Customers Say</h2>
+        </div>
+        <div class="test-grid">
+          <div class="tcard">
+            <div class="qmark">"</div>
+            <p class="ttext">Ordered an oversized hoodie and a pair of cargos — quality is insane for the price! The
+              fabric is thick, stitching is clean, and delivery was super fast. Zafran is now my go-to for
+              everything.</p>
+            <div class="tuser">
+              <div class="tavatar">AK</div>
+              <div>
+                <div class="tuname">Aakash Kumar</div>
+                <div class="tuloc">⭐⭐⭐⭐⭐ · Bangalore</div>
+              </div>
+            </div>
+          </div>
+          <div class="tcard">
+            <div class="qmark">"</div>
+            <p class="ttext">Bought a kurta set for Eid and a formal blazer for office. Both were perfect fits using
+              the size guide. The ethnic collection is genuinely premium — rivals brands 3x the price!</p>
+            <div class="tuser">
+              <div class="tavatar">MK</div>
+              <div>
+                <div class="tuname">Mohammed Kaleem</div>
+                <div class="tuloc">⭐⭐⭐⭐⭐ · Coimbatore</div>
+              </div>
+            </div>
+          </div>
+          <div class="tcard">
+            <div class="qmark">"</div>
+            <p class="ttext">Bought 5 gym tees and 3 dry-fit sets. The compression wear is exceptional — holds shape
+              after multiple washes. Free shipping over ₹999 is a great deal. Highly recommend Zafran!</p>
+            <div class="tuser">
+              <div class="tavatar">RS</div>
+              <div>
+                <div class="tuname">Rahul Sharma</div>
+                <div class="tuloc">⭐⭐⭐⭐⭐ · Mumbai</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    
+      <!-- NEWSLETTER -->
+      <div class="news rv">
+        <div class="news-t">
+          <h2>Get 15% Off First Order</h2>
+          <p>Subscribe for exclusive offers, new arrivals & seasonal collections.</p>
+        </div>
+        <div class="news-f">
+          <input class="news-inp" type="email" placeholder="your@email.com" id="newsEmail" />
+          <button class="news-btn" onclick="subNews()">Subscribe</button>
+        </div>
+      </div>
+    
+      <!-- FOOTER -->
+      <footer id="footer">
+        <div class="fgrid">
+          <div>
+            <a href="#" class="flogo">ZA<em>F</em>RAN</a>
+            <p class="fabout">Premium men's fashion — casual, ethnic, formal, winter & activewear. Celebrating
+              modern Indian style since 2015. Made with love in India.</p>
+            <div class="fsoc">
+              <a href="#" class="fsocbtn">f</a>
+              <a href="#" class="fsocbtn">ig</a>
+              <a href="#" class="fsocbtn">yt</a>
+              <a href="#" class="fsocbtn">wa</a>
+            </div>
+          </div>
+          <div class="fcol">
+            <h4>Collections</h4><a href="#">Casual Wear</a><a href="#">Bottom Wear</a><a href="#">Ethnic Wear</a><a
+              href="#">Winter Wear</a><a href="#">Formal Wear</a><a href="#">Activewear</a>
+          </div>
+          <div class="fcol">
+            <h4>Support</h4><a href="#">Track Order</a><a href="#">Size Guide</a><a href="#">Returns</a><a
+              href="#">FAQs</a><a href="#">Custom Orders</a><a href="#">Contact Us</a>
+          </div>
+          <div class="fcol">
+            <h4>Company</h4><a href="#">About Us</a><a href="#">Our Story</a><a href="#">Blog</a><a href="#">Wholesale</a><a
+              href="#">Privacy Policy</a><a href="#">Terms</a>
+          </div>
+        </div>
+        <div class="fbot">
+          <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;©
+            2026 <span>Zafran</span>. All rights reserved.Made by&nbsp; DEVASURYA SENTHILKUMAR 🧡 </span>
+        </div>
+        </footer>
+        <script src="script.js"></script>
+        </body>
+        
+        </html>
