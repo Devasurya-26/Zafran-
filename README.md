@@ -110,40 +110,6 @@ ZAFRAN/
 ```
 
 ---
-
-## ✦ Project Structure
-
-```
-Zafran-/
-│
-├── index.html        ←  Entire app — HTML + CSS + JS in one file
-└── README.md         ←  You are here
-```
-
-> Single-file architecture. Open `index.html` in any browser — it just works. No build step, no npm install, no config.
-
----
-
-## ✦ Run Locally
-
-```bash
-# Clone the repo
-git clone https://github.com/Devasurya-26/Zafran-.git
-
-# Enter folder
-cd Zafran-
-
-# Open in browser
-open index.html
-
-# Or use VS Code Live Server
-# Right click index.html → Open with Live Server
-```
-
----
-
----
-
 ## ✦ Roadmap
 
 - [x] 6-category product catalog (62+ products)
@@ -162,14 +128,6 @@ open index.html
 ## ✦ Author
 
 **Devasurya S** — [@Devasurya-26](https://github.com/Devasurya-26)
-
----
-
-## ✦ License
-
-```
-MIT License — Free to use, modify, and distribute.
-```
 
 ---
 
